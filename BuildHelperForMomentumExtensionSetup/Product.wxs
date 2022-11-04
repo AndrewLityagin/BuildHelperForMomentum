@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<?define ProductName="Build helper for Momentum" ?>
+	<?define ProductFolderName="BuildHelperForMomentumExtension" ?>
+	<?define ProductVersion="1.0.0.0" ?>
+	<?define ProductCode="6EE65BC8-B92B-47E8-AE91-924C3EDDA77C"?>
+	<?define UpgradeCode="77a150da-97f1-4d0b-ab31-2be98f46904c"?>
+	<?define Manufacturer="AndrewLityagin"?>
+	<?define SourceDir="..\Binaries\"?>
+	<Product Id="$(var.ProductCode)" Name="$(var.ProductName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="BuildHelperForMomentumExtensionSetup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+		<CustomAction Id="LaunchInstalledExe" Directory="INSTALLFOLDER"  Execute="immediate" Impersonate="yes" Return="asyncNoWait" ExeCommand="cmd.exe /c START BuildHelperForMomentumExtension.vsix"/>
+		
+		<InstallExecuteSequence>
+			<Custom Action='LaunchInstalledExe' After='InstallFinalize'/>
+		</InstallExecuteSequence>
+		
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" ></Property>
+		<WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="$(var.SourceDir)License.rtf"/>
+		<UIRef Id="WixUI_InstallDir"/>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="$(var.ProductFolderName)">
+			
+				</Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="ProductComponent" Guid ="F2239776-609E-498F-AC6A-318820E77D1F">
+				<File Name="BuildHelperForMomentumExtension.dll" Source="$(var.SourceDir)"/>
+				<File Name="BuildHelperForMomentumExtension.vsix" Source="$(var.SourceDir)"/>
+				<File Name="FileReplacer.exe" Source="$(var.SourceDir)"/>
+				<File Name="BuildHelperForMomentumExtension.pkgdef" Source="$(var.SourceDir)"/>
+				<File Name="FileReplacer.exe.config" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.Bcl.AsyncInterfaces.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.Extensions.Logging.Abstractions.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.VisualStudio.ComponentModelHost.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.VisualStudio.GraphModel.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.VisualStudio.Interop.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.VisualStudio.ProjectAggregator.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.VisualStudio.RemoteControl.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.VisualStudio.RpcContracts.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.VisualStudio.Shell.15.0.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.VisualStudio.Shell.Framework.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.VisualStudio.Telemetry.dll" Source="$(var.SourceDir)"/>
+				<File Name="Microsoft.VisualStudio.Utilities.Internal.dll" Source="$(var.SourceDir)"/>
+				<File Name="Newtonsoft.Json.dll" Source="$(var.SourceDir)"/>
+				<File Name="System.Buffers.dll" Source="$(var.SourceDir)"/>
+				<File Name="System.Memory.dll" Source="$(var.SourceDir)"/>
+				<File Name="System.Numerics.Vectors.dll" Source="$(var.SourceDir)"/>
+				<File Name="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.SourceDir)"/>
+				<File Name="System.Text.Encodings.Web.dll" Source="$(var.SourceDir)"/>
+				<File Name="System.Text.Json.dll" Source="$(var.SourceDir)"/>
+				<File Name="System.Threading.Tasks.Extensions.dll" Source="$(var.SourceDir)"/>
+				<File Name="System.ValueTuple.dll" Source="$(var.SourceDir)"/>
+				<File Name="extension.vsixmanifest" Source="$(var.SourceDir)"/>
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
